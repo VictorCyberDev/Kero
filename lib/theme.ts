@@ -5,6 +5,11 @@
  * needs a new value, add it here first rather than hardcoding it inline.
  */
 
+export const fontFamily = {
+  sans: '-apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif',
+  mono: "ui-monospace, monospace",
+} as const;
+
 export const colors = {
   textPrimary: "#1d1d1f",
   textSecondary: "#6e6e73",

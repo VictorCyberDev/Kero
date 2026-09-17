@@ -8,6 +8,8 @@ export interface RailOption {
   id: RailId;
   title: string;
   subtitle: string;
+  /** Delivery timing, reused in Review's fee-comparison copy instead of hardcoding "1 business day" regardless of the rail actually chosen. */
+  eta: string;
 }
 
 /** The only fee rate the design specifies (Review.dc.html: "1.2% fee") — applied uniformly since no rail-specific rate exists in the source material. */
@@ -18,16 +20,19 @@ export const RAILS: Record<RailId, RailOption> = {
     id: "bank",
     title: "Bank transfer",
     subtitle: "1 business day · GTBank, Access, Zenith + more",
+    eta: "1 business day",
   },
   momo: {
     id: "momo",
     title: "Mobile money",
     subtitle: "Instant · MTN, Airtel, OPay",
+    eta: "instantly",
   },
   agent: {
     id: "agent",
     title: "Cash pickup",
     subtitle: "Same day · Partner agent locations",
+    eta: "same day",
   },
 };
 

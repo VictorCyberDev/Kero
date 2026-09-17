@@ -63,8 +63,22 @@ export function computeFee(amount: number) {
   return { fee, recipientGets: amount - fee };
 }
 
+export type TransactionDirection = "in" | "out";
+
+export interface Transaction {
+  id: string;
+  title: string;
+  status: string;
+  date: string;
+  amount: string;
+  direction: TransactionDirection;
+}
+
+let nextTransactionId = 1;
+
 interface KeroState {
   balance: number;
+  transactions: Transaction[];
 
   cashOutAmount: string;
   setCashOutAmount: (amount: string) => void;
@@ -77,10 +91,17 @@ interface KeroState {
 
   lastSubmission: Submission | null;
   submitCashOut: () => Submission;
+
+  /** Simulates a completed deposit (Fund's "Done" action) — there's no live payments backend, see submitCashOut. */
+  fundWallet: () => void;
 }
 
 export const useKeroStore = create<KeroState>((set, get) => ({
-  balance: 1240,
+  // A freshly onboarded user has no balance yet — this is what makes Home's
+  // EmptyBalance treatment a real conditional state instead of a separate
+  // hardcoded screen. fundWallet() is the only thing that changes it.
+  balance: 0,
+  transactions: [],
 
   cashOutAmount: "0",
   setCashOutAmount: (amount) => set({ cashOutAmount: amount }),
@@ -95,6 +116,7 @@ export const useKeroStore = create<KeroState>((set, get) => ({
   submitCashOut: () => {
     const state = get();
     const rail = state.selectedRail ?? "bank";
+    const amount = Number(state.cashOutAmount) || 0;
     // No live payments backend exists yet — Status.dc.html's own copy already
     // discloses that payouts are "simulated ... for the hackathon demo". Roll
     // a mostly-success outcome so both the delivered and failed paths stay
@@ -108,7 +130,35 @@ export const useKeroStore = create<KeroState>((set, get) => ({
       outcome,
       submittedAt: Date.now(),
     };
-    set({ lastSubmission: submission });
+    const transaction: Transaction = {
+      id: `tx-${nextTransactionId++}`,
+      title: `Cash out · ${RAILS[rail].title}`,
+      status: outcome === "failed" ? "Failed" : "Processing",
+      date: "Today",
+      amount: `-${amount.toFixed(2)}`,
+      direction: "out",
+    };
+    set({
+      lastSubmission: submission,
+      // A failed transfer deducts nothing — matches TransferFailed.dc.html's
+      // own copy ("No funds were deducted from your balance").
+      balance: outcome === "failed" ? state.balance : state.balance - amount,
+      transactions: [transaction, ...state.transactions],
+    });
     return submission;
+  },
+
+  fundWallet: () => {
+    const state = get();
+    const amount = 1240;
+    const transaction: Transaction = {
+      id: `tx-${nextTransactionId++}`,
+      title: "Received · Pollar Bolivia ramp",
+      status: "Simulated for demo",
+      date: "Today",
+      amount: `+${amount.toFixed(2)}`,
+      direction: "in",
+    };
+    set({ balance: state.balance + amount, transactions: [transaction, ...state.transactions] });
   },
 }));

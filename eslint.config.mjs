@@ -12,6 +12,9 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // The design/ folder holds the original .dc.html mockups and the
+    // canvas tool's own (vendored, minified) runtime — not app source.
+    "design/**",
   ]),
 ]);
 

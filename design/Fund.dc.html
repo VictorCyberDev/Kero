@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+    @keyframes kero-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+    .kero-pulse-dot { animation: kero-pulse 1.6s ease-in-out infinite; }
+  </style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #ffffff; display: flex; flex-direction: column; padding: 20px; gap: 22px; overflow: hidden;">
+
+  <div style="display: flex; align-items: center; justify-content: center; position: relative; padding: 8px 0 0 0;">
+    <a href="Home.dc.html" style="position: absolute; left: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 5L8 12L15 19" stroke="#1d1d1f" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <div style="font-size: 17px; font-weight: 600; color: #1d1d1f;">Fund</div>
+  </div>
+
+  <div style="font-size: 15px; color: #6e6e73; text-align: center; line-height: 1.5;">Send USDC to this address to fund your Kero wallet</div>
+
+  <div style="display: flex; justify-content: center;">
+    <div style="width: 200px; height: 200px; border: 1px solid #e5e5ea; border-radius: 20px; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(7, 1fr); gap: 4px; padding: 20px;">
+      <div style="grid-column: 1 / span 2; grid-row: 1 / span 2; background: #1d1d1f; border-radius: 3px;"></div>
+      <div style="grid-column: 6 / span 2; grid-row: 1 / span 2; background: #1d1d1f; border-radius: 3px;"></div>
+      <div style="grid-column: 1 / span 2; grid-row: 6 / span 2; background: #1d1d1f; border-radius: 3px;"></div>
+      <div style="grid-column: 4; grid-row: 2; background: #1d1d1f; border-radius: 2px;"></div>
+      <div style="grid-column: 4; grid-row: 4; background: #1d1d1f; border-radius: 2px;"></div>
+      <div style="grid-column: 6; grid-row: 4; background: #1d1d1f; border-radius: 2px;"></div>
+      <div style="grid-column: 2; grid-row: 4; background: #1d1d1f; border-radius: 2px;"></div>
+      <div style="grid-column: 5; grid-row: 5; background: #1d1d1f; border-radius: 2px;"></div>
+      <div style="grid-column: 4; grid-row: 6; background: #1d1d1f; border-radius: 2px;"></div>
+      <div style="grid-column: 6; grid-row: 6; background: #1d1d1f; border-radius: 2px;"></div>
+    </div>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: space-between; background: #f5f5f7; border-radius: 14px; padding: 14px 16px;">
+    <div style="font-size: 14px; font-family: ui-monospace, monospace; color: #1d1d1f;">GA3D…K91F</div>
+    <button style="display: flex; align-items: center; gap: 6px; background: none; border: none; font-size: 13px; font-weight: 600; color: #1d1d1f;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none"><rect x="8" y="8" width="12" height="12" rx="2" stroke="#1d1d1f" stroke-width="1.7"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2" stroke="#1d1d1f" stroke-width="1.7"/></svg>
+      Copy
+    </button>
+  </div>
+
+  <div style="display: flex; justify-content: center;">
+    <div style="border: 1px solid #e5e5ea; border-radius: 999px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: #6e6e73;">Stellar · Testnet</div>
+  </div>
+
+  <div style="display: flex; align-items: center; justify-content: center; gap: 10px; padding: 8px 0;">
+    <div class="kero-pulse-dot" style="width: 8px; height: 8px; border-radius: 999px; background: #1d1d1f;"></div>
+    <div style="font-size: 14px; color: #6e6e73;">Waiting for incoming payment…</div>
+  </div>
+
+  <div style="font-size: 12px; color: #6e6e73; text-align: center; line-height: 1.5;">Funds typically arrive within a few seconds on testnet, via Pollar's sponsored transactions.</div>
+
+  <a href="Home.dc.html" style="display: flex; align-items: center; justify-content: center; background: #1d1d1f; color: #ffffff; border-radius: 16px; padding: 16px 0; font-size: 16px; font-weight: 600; margin-top: auto;">Done</a>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

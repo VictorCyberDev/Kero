@@ -1,0 +1,42 @@
+{
+  "v": 3,
+  "createdOnFiles": { "v": 1, "at": "2026-09-17T18:00:00Z" },
+  "title": "Kero",
+  "launch": { "view": "canvas" },
+  "pages": [],
+  "boards": {
+    "Index.dc.html": { "x": 0, "y": 0, "w": 390, "h": 844, "title": "Index" },
+    "Welcome.dc.html": { "x": 470, "y": 0, "w": 390, "h": 844, "title": "Welcome" },
+    "Login.dc.html": { "x": 940, "y": 0, "w": 390, "h": 844, "title": "Log in" },
+    "Signup.dc.html": { "x": 1410, "y": 0, "w": 390, "h": 844, "title": "Sign up" },
+    "Onboarding-Wallet.dc.html": { "x": 1880, "y": 0, "w": 390, "h": 844, "title": "Create wallet", "is_interactive": true },
+    "Onboarding-Identity.dc.html": { "x": 2350, "y": 0, "w": 390, "h": 844, "title": "Verify identity" },
+
+    "Home.dc.html": { "x": 0, "y": 964, "w": 390, "h": 844, "title": "Home" },
+    "Amount.dc.html": { "x": 470, "y": 964, "w": 390, "h": 844, "title": "Enter amount", "is_interactive": true },
+    "CashOut.dc.html": { "x": 940, "y": 964, "w": 390, "h": 844, "title": "Cash out", "is_interactive": true },
+    "Review.dc.html": { "x": 1410, "y": 964, "w": 390, "h": 844, "title": "Review" },
+    "Status.dc.html": { "x": 1880, "y": 964, "w": 390, "h": 844, "title": "Status" },
+
+    "Fund.dc.html": { "x": 0, "y": 1928, "w": 390, "h": 844, "title": "Fund" },
+    "Activity.dc.html": { "x": 470, "y": 1928, "w": 390, "h": 844, "title": "Activity", "is_interactive": true },
+    "Settings.dc.html": { "x": 940, "y": 1928, "w": 390, "h": 844, "title": "Settings" },
+
+    "EmptyBalance.dc.html": { "x": 0, "y": 2892, "w": 390, "h": 844, "title": "Home — empty state" },
+    "TransferFailed.dc.html": { "x": 470, "y": 2892, "w": 390, "h": 844, "title": "Status — failed" },
+    "NoRailsAvailable.dc.html": { "x": 940, "y": 2892, "w": 390, "h": 844, "title": "Cash out — no rails" }
+  },
+  "order": [
+    "Index.dc.html", "Welcome.dc.html", "Login.dc.html", "Signup.dc.html", "Onboarding-Wallet.dc.html", "Onboarding-Identity.dc.html",
+    "Home.dc.html", "Amount.dc.html", "CashOut.dc.html", "Review.dc.html", "Status.dc.html",
+    "Fund.dc.html", "Activity.dc.html", "Settings.dc.html",
+    "EmptyBalance.dc.html", "TransferFailed.dc.html", "NoRailsAvailable.dc.html"
+  ],
+  "notes": {
+    "n1": { "x": 0, "y": -80, "text": "Launch & onboarding", "kind": "title1", "maxW": 2740 },
+    "n2": { "x": 0, "y": 884, "text": "Core flow", "kind": "title1", "maxW": 2270 },
+    "n3": { "x": 0, "y": 1848, "text": "Secondary screens", "kind": "title1", "maxW": 1330 },
+    "n4": { "x": 0, "y": 2812, "text": "Empty and error states (reference)", "kind": "title1", "maxW": 1330 }
+  },
+  "designSystems": []
+}

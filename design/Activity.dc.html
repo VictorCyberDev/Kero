@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <style>
+    body { margin: 0; background: #ffffff; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; }
+  </style>
+</helmet>
+<div style="width: 390px; height: 844px; box-sizing: border-box; background: #ffffff; display: flex; flex-direction: column; overflow: hidden;">
+  <div style="flex: 1; overflow-y: auto; padding: 28px 20px 12px 20px; display: flex; flex-direction: column; gap: 20px;">
+
+    <div style="font-size: 28px; font-weight: 600; color: #1d1d1f; letter-spacing: -0.4px;">Activity</div>
+
+    <div style="display: flex; gap: 8px;">
+      <sc-for list="{{filters}}" as="item" hint-placeholder-count="3">
+        <button onClick="{{item.pick}}" style="padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; border: 1.5px solid {{item.border}}; background: {{item.bg}}; color: {{item.color}};">{{item.label}}</button>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-direction: column;">
+      <sc-for list="{{items}}" as="item" hint-placeholder-count="7">
+        <div style="display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid #e5e5ea;">
+          <div style="width: 40px; height: 40px; border-radius: 999px; background: #f5f5f7; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+            <sc-if value="{{item.isIn}}" hint-placeholder-val="{{true}}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M17 7L7 17M7 17H15M7 17V9" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </sc-if>
+            <sc-if value="{{item.isOut}}" hint-placeholder-val="{{false}}">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7V15" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </sc-if>
+          </div>
+          <div style="flex: 1; min-width: 0;">
+            <div style="font-size: 15px; font-weight: 500; color: #1d1d1f;">{{item.title}}</div>
+            <div style="font-size: 13px; color: #6e6e73;">{{item.status}} · {{item.date}}</div>
+          </div>
+          <div style="font-size: 15px; font-weight: 600; color: #1d1d1f;">{{item.amount}}</div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+
+  <div style="display: flex; border-top: 1px solid #e5e5ea; padding: 10px 0 22px 0; background: #ffffff;">
+    <a href="Home.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 11L12 4L20 11" stroke="#6e6e73" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 10V19H18V10" stroke="#6e6e73" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-size: 11px; color: #6e6e73;">Home</span>
+    </a>
+    <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 12H8L10 6L14 18L16 12H20" stroke="#1d1d1f" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span style="font-size: 11px; color: #1d1d1f; font-weight: 600;">Activity</span>
+    </div>
+    <a href="Settings.dc.html" style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="#6e6e73" stroke-width="1.8"/><path d="M5 20c0-3.8 3.2-6 7-6s7 2.2 7 6" stroke="#6e6e73" stroke-width="1.8" stroke-linecap="round"/></svg>
+      <span style="font-size: 11px; color: #6e6e73;">Settings</span>
+    </a>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const filter = (this.state && this.state.filter) || 'all';
+    const allItems = [
+      { id: 1, title: 'Received · Pollar Bolivia ramp', status: 'Simulated for demo', date: 'Today', amount: '+500.00', dir: 'in' },
+      { id: 2, title: 'Cash out · GTBank •••1234', status: 'Delivered', date: 'Today', amount: '-300.00', dir: 'out' },
+      { id: 3, title: 'Cash out · MTN Mobile Money', status: 'Processing', date: 'Today', amount: '-150.00', dir: 'out' },
+      { id: 4, title: 'Received · Pollar Bolivia ramp', status: 'Simulated for demo', date: 'Yesterday', amount: '+220.00', dir: 'in' },
+      { id: 5, title: 'Cash out · Access Bank •••9042', status: 'Delivered', date: 'Yesterday', amount: '-180.00', dir: 'out' },
+      { id: 6, title: 'Cash out · OPay', status: 'Failed', date: '2 days ago', amount: '-90.00', dir: 'out' },
+      { id: 7, title: 'Received · Pollar Bolivia ramp', status: 'Simulated for demo', date: '3 days ago', amount: '+640.00', dir: 'in' }
+    ];
+    const items = allItems
+      .filter((t) => filter === 'all' || (filter === 'sent' && t.dir === 'out') || (filter === 'received' && t.dir === 'in'))
+      .map((t) => ({ ...t, isIn: t.dir === 'in', isOut: t.dir === 'out' }));
+    const filterDefs = [
+      { id: 'all', label: 'All' },
+      { id: 'sent', label: 'Sent' },
+      { id: 'received', label: 'Received' }
+    ];
+    const filters = filterDefs.map((f) => {
+      const active = f.id === filter;
+      return {
+        ...f,
+        border: active ? '#1d1d1f' : '#e5e5ea',
+        bg: active ? '#1d1d1f' : '#ffffff',
+        color: active ? '#ffffff' : '#1d1d1f',
+        pick: () => this.setState({ filter: f.id })
+      };
+    });
+    return { items, filters };
+  }
+}
+</script>
+</body>
+</html>

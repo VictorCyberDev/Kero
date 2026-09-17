@@ -316,8 +316,8 @@ grep-based scan used to write this report originally.
 | §5i | Login/Signup CTA not bottom-pinned | Added `margin-top: auto` to both CTAs and removed the trailing `flex:1` spacer div, matching the pattern used by Onboarding/Amount/Fund/CashOut/Review/Status. |
 | §5j | "Max" button border-width outlier | Changed from `1px` to `1.5px`, matching the interactive-element border convention. |
 | §5l | Onboarding-Wallet back button skipped Signup | Changed `href` from `Welcome.dc.html` to `Signup.dc.html`, matching the actual Signup → Onboarding-Wallet flow order. |
-| §2 (radius) | ID-type segments (12px) vs. selection cards (16px) | **Left unchanged** — flagged in the original report as "possibly intentional (different component scale)" with no fix decision given; the two are genuinely different-scale components (inline 3-way segment vs. full-width list card). |
-| §5k | TransferFailed vs. NoRailsAvailable error-icon treatment | **Left unchanged** — flagged as "plausibly deliberate" severity signaling (hard failure vs. soft/temporary unavailability), no fix decision given. |
+| §2 (radius) | ID-type segments (12px) vs. selection cards (16px) | **Confirmed intentional, formalized.** Added `radii.control = 12` to `lib/theme.ts` alongside `radii.card = 16`, with a comment explaining the distinction (segmented controls vs. full-width cards), and built `components/ui/SegmentedControl.tsx` on `radii.control` so the ID-type selector has its own named component rather than reusing `SelectableCard`'s radius by coincidence. |
+| §5k | TransferFailed vs. NoRailsAvailable error-icon treatment | **Confirmed intentional (severity signal), kept distinct — but sizes unified.** TransferFailed's solid circle+X and NoRailsAvailable's dashed circle stay as different treatments. Their outer footprint was inconsistent (64px vs. 56px) purely as an oversight, not part of the intentional distinction, so TransferFailed's frame is now 56px, matching NoRailsAvailable exactly. |
 
 **Re-scan confirmation after fixes:**
 - Colors: still exactly 6 values, same as before (no new colors introduced).
@@ -340,8 +340,10 @@ from them instead of re-deriving inline styles by eye:
   sequence and Home's decorative background mark are deliberately out of
   scope — see the component's doc comment).
 - `components/ui/` — `BackHeader` / `CloseHeader`, `SelectableCard`,
-  `SummaryCard`, `TransactionRow`, `PrimaryButton`, `SecondaryLink`: one
-  implementation per standardized pattern, each documented with which
-  screen's values were treated as canonical.
+  `SummaryCard`, `TransactionRow`, `PrimaryButton`, `SecondaryLink`,
+  `SegmentedControl`: one implementation per standardized pattern, each
+  documented with which screen's values were treated as canonical.
+  `SegmentedControl` is intentionally its own component (on `radii.control`)
+  rather than a `SelectableCard` variant — they're different-scale patterns.
 
 `npx tsc --noEmit` passes clean against this extraction.

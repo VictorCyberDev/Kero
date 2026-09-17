@@ -2,6 +2,8 @@ export { BackHeader, CloseHeader } from "./HeaderNav";
 export type { BackHeaderProps, CloseHeaderProps } from "./HeaderNav";
 export { SelectableCard } from "./SelectableCard";
 export type { SelectableCardProps } from "./SelectableCard";
+export { SegmentedControl } from "./SegmentedControl";
+export type { SegmentedControlProps, SegmentedControlOption } from "./SegmentedControl";
 export { SummaryCard } from "./SummaryCard";
 export type { SummaryCardProps, SummaryRow } from "./SummaryCard";
 export { TransactionRow } from "./TransactionRow";

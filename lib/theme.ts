@@ -16,6 +16,9 @@ export const colors = {
 
 export const radii = {
   input: 12,
+  // control (segmented controls, e.g. the ID-type selector) is deliberately
+  // smaller than card (full-width selectable cards) — not the same component at two sizes.
+  control: 12,
   card: 16,
   pill: 999,
   keypadKey: 14,

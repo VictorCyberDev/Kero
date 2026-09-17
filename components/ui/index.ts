@@ -14,3 +14,5 @@ export { PrimaryButton } from "./PrimaryButton";
 export type { PrimaryButtonProps } from "./PrimaryButton";
 export { SecondaryLink } from "./SecondaryLink";
 export type { SecondaryLinkProps } from "./SecondaryLink";
+export { TextField } from "./TextField";
+export type { TextFieldProps } from "./TextField";

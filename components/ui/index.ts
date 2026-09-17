@@ -1,3 +1,5 @@
+export { Screen } from "./Screen";
+export type { ScreenProps } from "./Screen";
 export { BackHeader, CloseHeader } from "./HeaderNav";
 export type { BackHeaderProps, CloseHeaderProps } from "./HeaderNav";
 export { SelectableCard } from "./SelectableCard";

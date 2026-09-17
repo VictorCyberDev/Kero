@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { colors, fontSize } from "../../lib/theme";
 
 export interface SecondaryLinkProps {
@@ -27,9 +28,9 @@ export function SecondaryLink({ children, href, onClick }: SecondaryLinkProps) {
 
   if (href) {
     return (
-      <a href={href} style={style}>
+      <Link href={href} style={style}>
         {children}
-      </a>
+      </Link>
     );
   }
 

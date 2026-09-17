@@ -50,6 +50,7 @@ export const fontSize = {
 export const letterSpacing = {
   pageHeading: -0.4,
   bigNumeral: -1,
+  wordmark: -0.5,
 } as const;
 
 export const spacing = {

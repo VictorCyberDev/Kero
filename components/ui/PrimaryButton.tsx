@@ -1,4 +1,5 @@
 import * as React from "react";
+import Link from "next/link";
 import { colors, fontSize, radii } from "../../lib/theme";
 
 export interface PrimaryButtonProps {
@@ -8,6 +9,8 @@ export interface PrimaryButtonProps {
   /** Every flow screen pins its primary CTA to the bottom via margin-top: auto. */
   pinToBottom?: boolean;
   disabled?: boolean;
+  /** Escape hatch for page-local concerns components/ui can't know about (e.g. the splash entrance animation). */
+  className?: string;
 }
 
 /**
@@ -15,7 +18,7 @@ export interface PrimaryButtonProps {
  * #1d1d1f). NoRailsAvailable previously broke this with an outline+15px
  * treatment — fixed, see CONSISTENCY_REPORT.md item 7.
  */
-export function PrimaryButton({ children, href, onClick, pinToBottom, disabled }: PrimaryButtonProps) {
+export function PrimaryButton({ children, href, onClick, pinToBottom, disabled, className }: PrimaryButtonProps) {
   const style: React.CSSProperties = {
     display: "flex",
     alignItems: "center",
@@ -33,14 +36,14 @@ export function PrimaryButton({ children, href, onClick, pinToBottom, disabled }
 
   if (href && !disabled) {
     return (
-      <a href={href} style={style}>
+      <Link href={href} style={style} className={className}>
         {children}
-      </a>
+      </Link>
     );
   }
 
   return (
-    <button type="button" onClick={onClick} disabled={disabled} style={style}>
+    <button type="button" onClick={onClick} disabled={disabled} style={style} className={className}>
       {children}
     </button>
   );

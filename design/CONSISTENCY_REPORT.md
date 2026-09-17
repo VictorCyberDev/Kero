@@ -1,5 +1,13 @@
 # Kero design artifact — consistency report
 
+> **Status: all findings below have been fixed and re-verified**, except two
+> that were explicitly hedged as "possibly intentional" and left unchanged
+> per the design decisions on file (noted in the verification section at the
+> bottom). The narrative below is preserved as-written (the original
+> before/after record) — see the **Verification — round 2** section at the
+> end for the fix applied to each item and the confirmation scan.
+
+
 Scope: all 17 `.dc.html` screens in `design/` (Welcome, Login, Signup, Index,
 Onboarding-Wallet, Onboarding-Identity, Home, EmptyBalance, Amount, Fund,
 CashOut, Review, Status, Activity, Settings, NoRailsAvailable,
@@ -283,5 +291,57 @@ The drift is concentrated in a handful of places:
 7. A few one-off CTA/link styling breaks (NoRailsAvailable's CTA,
    secondary-link color, Login/Signup's un-pinned CTA position).
 
-None of this is fixed — flagging so you can decide what's intentional design
-variation vs. drift before anything gets built against it.
+All of the above has now been fixed — see the verification section below.
+
+---
+
+## Verification — round 2 (fixes applied)
+
+Each finding above was resolved as follows, then re-confirmed with the same
+grep-based scan used to write this report originally.
+
+| # | Finding | Fix applied |
+|---|---|---|
+| §4 | Logo geometry — two proportion sets | Kept both intentionally as two named variants (`Logo` component, `size="small"` / `size="hero"`) — see `components/Logo.tsx`. |
+| §4 | EmptyBalance header logo doesn't animate | Added the same `animateTransform` (6s orbit) that Home's header logo has. Confirmed both now emit `dur="6s"`. |
+| §3 | Headline size splits 28/26/24px | Welcome, Onboarding-Wallet, Onboarding-Identity all changed to 28px. Confirmed: `24px`/`26px` no longer appear anywhere in `design/*.dc.html`; `28px` now appears on exactly the 7 expected screens (Login, Signup, Onboarding-Wallet, Onboarding-Identity, Welcome, Activity, Settings). |
+| §5a | Three back-header layout techniques | Login, Signup, Onboarding-Wallet, Onboarding-Identity conformed to the majority technique (`justify-content:center; position:relative` wrapper + absolutely-positioned back button) already used by Amount/Fund/CashOut/Review/Status/NoRailsAvailable. Confirmed: that exact wrapper string now appears in all 10 back-nav screens, and only those 10. TransferFailed's X-close stroke-width raised from 1.8 to 2 to match the shared back-button token (its 36×36 tap target already matched; its `flex-end`/no-title layout is intentionally kept, since it dismisses rather than navigates back). |
+| §5b | Outer-container `gap` inconsistent (20/22/24/28px) | Standardized every `padding:20px` flow screen to `gap:24px` (the pre-existing majority value). Confirmed: all 11 such screens now read `gap: 24px`; Welcome/Index (the distinct centered-splash layout) are unchanged by design. |
+| §5c | Selectable-card padding (18px vs 16px) | Onboarding-Wallet's cards changed from 18px to 16px to match CashOut (canonical). Confirmed both files now read `padding: 16px`. |
+| §5d | Receipt-card gap/font-size/dividers (Review vs. TransferFailed) | TransferFailed's card changed to match Review: gap 12→14px, label 13→14px, value 14→15px, added the two 1px dividers between rows. (Settings has no equivalent receipt-style card — its plain bordered list is a different component and wasn't touched.) |
+| §5e | Transaction row padding + status color (Home vs. Activity) | Activity's rows changed from `14px 0` to `12px 0`. Added `iconColor` (muted to `#6e6e73` when `status === 'Processing'`, else `#1d1d1f`) to Activity's row data and wired it into both direction icons, matching Home's existing behavior. |
+| §5f | Two profile/settings icon glyphs | Home's and EmptyBalance's header shortcut icon replaced with the tab-bar glyph (`r=3.2`, `M5 20c0-3.8 3.2-6 7-6s7 2.2 7 6`). Confirmed the old glyph (`M4 20c0-4 3.5-6 8-6s8 2 8 6`) no longer appears anywhere, and the one remaining glyph appears consistently in both header and tab-bar positions on every screen that has either. |
+| §5g | NoRailsAvailable CTA outline+15px | Changed to filled `#1d1d1f`/white text, 16px — matching every other primary CTA. |
+| §5h | Secondary-link color mismatch | TransferFailed's "Contact support" changed from `#1d1d1f` to `#6e6e73` (NoRailsAvailable's "Back to home" was already correct). |
+| §5i | Login/Signup CTA not bottom-pinned | Added `margin-top: auto` to both CTAs and removed the trailing `flex:1` spacer div, matching the pattern used by Onboarding/Amount/Fund/CashOut/Review/Status. |
+| §5j | "Max" button border-width outlier | Changed from `1px` to `1.5px`, matching the interactive-element border convention. |
+| §5l | Onboarding-Wallet back button skipped Signup | Changed `href` from `Welcome.dc.html` to `Signup.dc.html`, matching the actual Signup → Onboarding-Wallet flow order. |
+| §2 (radius) | ID-type segments (12px) vs. selection cards (16px) | **Left unchanged** — flagged in the original report as "possibly intentional (different component scale)" with no fix decision given; the two are genuinely different-scale components (inline 3-way segment vs. full-width list card). |
+| §5k | TransferFailed vs. NoRailsAvailable error-icon treatment | **Left unchanged** — flagged as "plausibly deliberate" severity signaling (hard failure vs. soft/temporary unavailability), no fix decision given. |
+
+**Re-scan confirmation after fixes:**
+- Colors: still exactly 6 values, same as before (no new colors introduced).
+- Font sizes: `24px` and `26px` are gone; `28px` is now the single page-heading size.
+- Outer `gap`: uniform `24px` across every `padding:20px` flow screen.
+- Border-width: informational elements are `1px`, every interactive element (including "Max") is now `1.5px`.
+- Logo: `dur="6s"` now appears twice (Home + EmptyBalance headers, matched); `dur="7s"` twice (Welcome + Index splash, matched); the two intentional geometry variants are now named/enforced in code via `components/Logo.tsx` rather than living as ad hoc inline SVGs.
+- Profile/settings icon: exactly one glyph definition in use, everywhere.
+
+## Shared theme & components extracted
+
+The now-consistent values are captured in code so future screens are built
+from them instead of re-deriving inline styles by eye:
+
+- `lib/theme.ts` — colors, radii, font sizes, letter-spacing, spacing
+  (including the canonical `sectionGap: 24`), border widths, and the
+  back-button/close icon tokens.
+- `components/Logo.tsx` — the orbit mark as `size="small" | "hero"`,
+  matching the two intentional geometries above (the splash entrance
+  sequence and Home's decorative background mark are deliberately out of
+  scope — see the component's doc comment).
+- `components/ui/` — `BackHeader` / `CloseHeader`, `SelectableCard`,
+  `SummaryCard`, `TransactionRow`, `PrimaryButton`, `SecondaryLink`: one
+  implementation per standardized pattern, each documented with which
+  screen's values were treated as canonical.
+
+`npx tsc --noEmit` passes clean against this extraction.

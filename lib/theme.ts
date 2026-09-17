@@ -40,6 +40,7 @@ export const fontSize = {
   cta: 16,
   headerTitle: 17,
   amountUnit: 18,
+  keypadKey: 22,
   brandMark: 20,
   pageHeading: 28,
   wordmark: 34,
